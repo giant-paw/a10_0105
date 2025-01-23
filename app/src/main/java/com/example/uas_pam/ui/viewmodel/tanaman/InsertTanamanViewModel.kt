@@ -49,7 +49,7 @@ fun InsertTanamanEvent.toTanaman(): Tanaman = Tanaman(
     deskripsitanaman = deskripsitanaman
 )
 
-fun Tanaman.toUiStateMahasiswa():InsertTanamanState = InsertTanamanState(
+fun Tanaman.toUiStateTanaman():InsertTanamanState = InsertTanamanState(
     insertTanamanEvent = toInsertTanamanEvent()
 )
 
