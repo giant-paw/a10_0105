@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
@@ -25,13 +26,19 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,9 +48,69 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uas_pam.R
 import com.example.uas_pam.model.Tanaman
+import com.example.uas_pam.ui.customwidget.TopAppBarr
+import com.example.uas_pam.ui.viewmodel.penyediamodel.PenyediaViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.HomeTanamanState
 import com.example.uas_pam.ui.viewmodel.tanaman.HomeTanamanViewModel
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeTanamanScreen(
+    navigateBack: () -> Unit,
+    navigateToItemEntry: () -> Unit,
+    onDetailClick: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+    viewModel: HomeTanamanViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    LaunchedEffect(Unit) {
+        viewModel.getTnmn()
+    }
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBarr(
+                title = DestinasiHomeTanaman.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack,
+                onRefresh = {
+                    viewModel.getTnmn()
+                }
+            )
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = navigateToItemEntry,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Tambah Tanaman"
+                    )
+                },
+                text = {
+                    Text(text = "Tambah Tanaman")
+                },
+                containerColor = colorResource(R.color.primary),
+                contentColor = Color.White,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    ) { innerPadding ->
+        HomeStatusTanaman(
+            homeTanamanState = viewModel.tanamanHomeState,
+            retryAction = { viewModel.getTnmn() },
+            modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick,
+            onDeleteClick = { tanaman ->
+                viewModel.deleteTnmn(tanaman.idtanaman)
+            }
+        )
+    }
+}
 
 @Composable
 fun HomeStatusTanaman(
