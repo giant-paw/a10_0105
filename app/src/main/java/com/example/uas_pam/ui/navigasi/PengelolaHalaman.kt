@@ -3,13 +3,17 @@ package com.example.uas_pam.ui.navigasi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.uas_pam.ui.view.screen.MainMenuScreen
 import com.example.uas_pam.ui.view.screen.MainScreen
+import com.example.uas_pam.ui.view.tanaman.DestinasiDetailTanaman
 import com.example.uas_pam.ui.view.tanaman.DestinasiHomeTanaman
 import com.example.uas_pam.ui.view.tanaman.DestinasiInsertTanaman
+import com.example.uas_pam.ui.view.tanaman.DetailTanamanScreen
 import com.example.uas_pam.ui.view.tanaman.EntryTanamanScreen
 import com.example.uas_pam.ui.view.tanaman.HomeTanamanScreen
 
@@ -21,23 +25,25 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         modifier = Modifier
     ) {
 
-//        MAIN SCREEN / HALAMAN UTAMA
+//       NAVIGASI MAIN SCREEN / HALAMAN UTAMA
         composable(MainScreen.route) {
             MainMenuScreen(
                 onNavigateToTanaman = { navController.navigate(DestinasiHomeTanaman.route) }
             )
         }
 
-//        TAMPILAN HOME UNTUK TANAMAN
+//        NAVIGASI HOME UNTUK TANAMAN
         composable(DestinasiHomeTanaman.route) {
             HomeTanamanScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = { navController.navigate(DestinasiInsertTanaman.route) },
-                onDetailClick = {}
+                onDetailClick = {id_tanaman ->
+                    navController.navigate("${DestinasiDetailTanaman.route}/$id_tanaman")
+                }
             )
         }
 
-//        TAMPILAN INSERT TANAMAN
+//        NAVIGASI INSERT TANAMAN
         composable(
             route = DestinasiInsertTanaman.route,
         ) {
@@ -49,6 +55,19 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
+            )
+        }
+
+//        NAVIGASI DETAIL TANAMAN
+        composable(
+            route = "${DestinasiDetailTanaman.route}/{id_tanaman}",
+            arguments = listOf(navArgument("id_tanaman") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_tanaman = backStackEntry.arguments?.getString("id_tanaman") ?: return@composable
+            DetailTanamanScreen(
+                id_tanaman = id_tanaman,
+                navigateBack = { navController.navigateUp() },
+                navController = navController
             )
         }
     }
