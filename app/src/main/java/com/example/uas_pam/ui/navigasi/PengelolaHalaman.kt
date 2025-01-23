@@ -20,7 +20,15 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
     ) {
         composable(MainScreen.route) {
             MainMenuScreen(
-                onNavigateToTanaman = {navController.navigate(DestinasiHomeTanaman.route)}
+                onNavigateToTanaman = { navController.navigate(DestinasiHomeTanaman.route) }
+            )
+        }
+
+        composable(DestinasiHomeTanaman.route) {
+            HomeTanamanScreen(
+                navigateBack = { navController.navigateUp() },
+                navigateToItemEntry = { },
+                onDetailClick = {}
             )
         }
     }

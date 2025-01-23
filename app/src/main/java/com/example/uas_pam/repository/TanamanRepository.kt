@@ -16,6 +16,7 @@ class NetworkTanamanRepository(private val tanamanApiService: TanamanService): T
     override suspend fun insertTanaman(tanaman: Tanaman){
         tanamanApiService.insertTanaman(tanaman)
     }
+
     override suspend fun updateTanaman(idtanaman: String, tanaman: Tanaman){
         tanamanApiService.updateTanaman(idtanaman, tanaman)
     }
