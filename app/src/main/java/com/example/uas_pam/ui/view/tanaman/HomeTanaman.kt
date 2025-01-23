@@ -49,10 +49,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uas_pam.R
 import com.example.uas_pam.model.Tanaman
 import com.example.uas_pam.ui.customwidget.TopAppBarr
+import com.example.uas_pam.ui.navigasi.DestinasiNavigasi
 import com.example.uas_pam.ui.viewmodel.penyediamodel.PenyediaViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.HomeTanamanState
 import com.example.uas_pam.ui.viewmodel.tanaman.HomeTanamanViewModel
 
+object DestinasiHomeTanaman: DestinasiNavigasi {
+    override val route = "home_tanaman"
+    override val titleRes = "Daftar Tanaman"
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

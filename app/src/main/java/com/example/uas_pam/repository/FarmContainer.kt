@@ -11,7 +11,7 @@ interface AppContainer {
 }
 
 class FarmContainer: AppContainer{
-    private val baseUrl = "http://10.0.2.2/pamTA/"
+    private val baseUrl = "http://10.0.2.2/UASPAM/"
 
     private val json = Json { ignoreUnknownKeys = true }
 
