@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TanamanService {
@@ -15,6 +14,7 @@ interface TanamanService {
         "Accept: application/json",
         "Content-type: application/json"
     )
+
     @GET("readtanaman.php")
     suspend fun getTanaman(): List<Tanaman>
 
