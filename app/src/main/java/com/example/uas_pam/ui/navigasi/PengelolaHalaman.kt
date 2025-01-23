@@ -13,9 +13,11 @@ import com.example.uas_pam.ui.view.screen.MainScreen
 import com.example.uas_pam.ui.view.tanaman.DestinasiDetailTanaman
 import com.example.uas_pam.ui.view.tanaman.DestinasiHomeTanaman
 import com.example.uas_pam.ui.view.tanaman.DestinasiInsertTanaman
+import com.example.uas_pam.ui.view.tanaman.DestinasiUpdateTanaman
 import com.example.uas_pam.ui.view.tanaman.DetailTanamanScreen
 import com.example.uas_pam.ui.view.tanaman.EntryTanamanScreen
 import com.example.uas_pam.ui.view.tanaman.HomeTanamanScreen
+import com.example.uas_pam.ui.view.tanaman.UpdateTanamanScreen
 
 @Composable
 fun PengelolaHalaman(navController: NavHostController = rememberNavController()) {
@@ -68,6 +70,18 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 id_tanaman = id_tanaman,
                 navigateBack = { navController.navigateUp() },
                 navController = navController
+            )
+        }
+
+//        NAVIGASI UPDATE TANAMAN
+        composable(
+            route = "${DestinasiUpdateTanaman.route}/{id_tanaman}",
+            arguments = listOf(navArgument("id_tanaman") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_tanaman = backStackEntry.arguments?.getString("id_tanaman") ?: return@composable
+            UpdateTanamanScreen(
+                id_tanaman = id_tanaman,
+                navigateBack = { navController.navigateUp() }
             )
         }
     }

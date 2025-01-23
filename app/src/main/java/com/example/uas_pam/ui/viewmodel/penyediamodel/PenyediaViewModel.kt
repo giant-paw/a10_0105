@@ -9,14 +9,20 @@ import com.example.uas_pam.FarmApplication
 import com.example.uas_pam.ui.viewmodel.tanaman.DetailTanamanViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.HomeTanamanViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.InsertTanamanViewModel
+import com.example.uas_pam.ui.viewmodel.tanaman.UpdateTanamanViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
-        initializer { HomeTanamanViewModel(farmapp().container.tanamanRepository) }
 
+        // Home Tanaman
+        initializer { HomeTanamanViewModel(farmapp().container.tanamanRepository) }
+        // Insert Tanaman
         initializer { InsertTanamanViewModel(farmapp().container.tanamanRepository) }
+        // Detail Tanaman
         initializer { DetailTanamanViewModel(createSavedStateHandle(),
             farmapp().container.tanamanRepository) }
+        // Update Tanaman
+        initializer { UpdateTanamanViewModel(farmapp().container.tanamanRepository) }
     }
 }
 
