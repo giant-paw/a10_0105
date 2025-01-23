@@ -39,7 +39,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
 
 //        TAMPILAN INSERT TANAMAN
         composable(
-            route = "${DestinasiInsertTanaman.route}",
+            route = DestinasiInsertTanaman.route,
         ) {
             EntryTanamanScreen(
                 navigateBack = {

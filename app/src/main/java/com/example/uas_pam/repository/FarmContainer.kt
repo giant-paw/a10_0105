@@ -18,11 +18,9 @@ class FarmContainer: AppContainer{
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrl).build()
-
     private val tanamanService: TanamanService by lazy {
         retrofit.create(TanamanService::class.java)
     }
 
     override val tanamanRepository : TanamanRepository by lazy { NetworkTanamanRepository(tanamanService) }
-
 }
