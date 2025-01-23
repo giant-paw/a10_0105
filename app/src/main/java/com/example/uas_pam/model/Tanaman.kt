@@ -11,5 +11,6 @@ data class Tanaman(
     val namatanaman : String,
     @SerialName("periode_tanam")
     val periodetanam : String,
+    @SerialName("deskripsi_tanaman")
     val deskripsitanaman : String,
 )
