@@ -18,7 +18,7 @@ sealed class HomePekerjaState{
 }
 
 class HomePekerjaViewModel (private val pkrj: PekerjaRepository): ViewModel(){
-    var kamarHomeState: HomePekerjaState by mutableStateOf(HomePekerjaState.Loading)
+    var pekerjaHomeState: HomePekerjaState by mutableStateOf(HomePekerjaState.Loading)
         private set
 
     init {
@@ -27,8 +27,8 @@ class HomePekerjaViewModel (private val pkrj: PekerjaRepository): ViewModel(){
 
     fun getPekerja(){
         viewModelScope.launch {
-            kamarHomeState = HomePekerjaState.Loading
-            kamarHomeState = try {
+            pekerjaHomeState = HomePekerjaState.Loading
+            pekerjaHomeState = try {
                 HomePekerjaState.Success(pkrj.getPekerja())
             }catch (e: IOException){
                 HomePekerjaState.Error
