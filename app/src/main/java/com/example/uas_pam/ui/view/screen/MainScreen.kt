@@ -33,6 +33,7 @@ object MainScreen: DestinasiNavigasi {
 fun MainMenuScreen(
     onNavigateToTanaman: () -> Unit,
     onNavigateToPekerja: () -> Unit,
+    onNavigateToAktivitas: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -62,6 +63,8 @@ fun MainMenuScreen(
                     .size(300.dp)
                     .padding(bottom = 24.dp)
             )
+
+            // Ke Tanaman
             Button(
                 onClick = { onNavigateToTanaman() },
                 modifier = Modifier.fillMaxWidth(),
@@ -73,6 +76,7 @@ fun MainMenuScreen(
                     color = Color.White)
             }
 
+            // Ke Pekerja
             Button(
                 onClick = { onNavigateToPekerja() },
                 modifier = Modifier.fillMaxWidth(),
@@ -81,6 +85,18 @@ fun MainMenuScreen(
                 )
             ) {
                 Text(text = "Pekerja",
+                    color = Color.White)
+            }
+
+            // Ke Aktivitas Pertanian
+            Button(
+                onClick = { onNavigateToAktivitas() },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.purple_700)
+                )
+            ) {
+                Text(text = "Aktivitas Pertanian",
                     color = Color.White)
             }
         }

@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.uas_pam.ui.view.aktivitas.DestinasiHomeAktivitas
+import com.example.uas_pam.ui.view.aktivitas.HomeAktivitasScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
@@ -39,9 +41,11 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         composable(MainScreen.route) {
             MainMenuScreen(
                 onNavigateToTanaman = { navController.navigate(DestinasiHomeTanaman.route) },
-                onNavigateToPekerja = { navController.navigate(DestinasiHomePekerja.route) }
+                onNavigateToPekerja = { navController.navigate(DestinasiHomePekerja.route) },
+                onNavigateToAktivitas = { navController.navigate(DestinasiHomeAktivitas.route) },
             )
         }
+
 
         // NAVIGASI HOME UNTUK TANAMAN
         composable(DestinasiHomeTanaman.route) {
@@ -146,6 +150,17 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 id_pekerja = id_pekerja,
                 navigateBack = { navController.navigateUp() },
                 navController = navController
+            )
+        }
+
+
+
+        // NAVIGASI HOME AKTIVITAS PERTANIAN
+        composable(DestinasiHomeAktivitas.route) {
+            HomeAktivitasScreen(
+                navigateBack = { navController.navigateUp() },
+                navigateToItemEntry = { },
+                onDetailClick = { }
             )
         }
     }

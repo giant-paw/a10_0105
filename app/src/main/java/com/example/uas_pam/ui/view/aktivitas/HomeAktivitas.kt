@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -229,7 +230,7 @@ fun AktivitasCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Create, contentDescription = null)
+                Icon(imageVector = Icons.Filled.Info, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = aktivitas.deskripsi_aktivitas,
