@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
+import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
+import com.example.uas_pam.ui.view.pekerja.EntryPekerjaScreen
 import com.example.uas_pam.ui.view.pekerja.HomePekerjaScreen
 import com.example.uas_pam.ui.view.screen.MainMenuScreen
 import com.example.uas_pam.ui.view.screen.MainScreen
@@ -93,8 +95,23 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         composable(DestinasiHomePekerja.route) {
             HomePekerjaScreen(
                 navigateBack = { navController.navigateUp() },
-                navigateToItemEntry = {  },
+                navigateToItemEntry = { navController.navigate(DestinasiInsertPekerja.route) },
                 navigateToUpdate = { }
+            )
+        }
+
+        // NAVIGASI INSERT PEKERJA
+        composable(
+            route = DestinasiInsertPekerja.route,
+        ) {
+            EntryPekerjaScreen(
+                navigateBack = {
+                    navController.navigate(DestinasiHomePekerja.route) {
+                        popUpTo(DestinasiHomePekerja.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }
