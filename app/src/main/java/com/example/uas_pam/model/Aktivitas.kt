@@ -14,5 +14,5 @@ data class Aktivitas(
     @SerialName("tanggal_aktivitas")
     val tanggalaktivitas : String,
     @SerialName("deskripsi_aktivitas")
-    val deskripsi_aktivitas : String
+    val deskripsiaktivitas : String
 )

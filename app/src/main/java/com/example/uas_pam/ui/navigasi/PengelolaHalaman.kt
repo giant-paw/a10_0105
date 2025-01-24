@@ -160,6 +160,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             HomeAktivitasScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = { },
+                navigateToUpdate = { },
                 onDetailClick = { }
             )
         }
