@@ -1,22 +1,15 @@
-package com.example.uas_pam.ui.view.tanaman
+package com.example.uas_pam.ui.view.pekerja
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -25,11 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -40,50 +29,50 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uas_pam.R
 import com.example.uas_pam.ui.customwidget.TopAppBarr
 import com.example.uas_pam.ui.navigasi.DestinasiNavigasi
+import com.example.uas_pam.ui.viewmodel.pekerja.UpdatePekerjaEvent
+import com.example.uas_pam.ui.viewmodel.pekerja.UpdatePekerjaState
+import com.example.uas_pam.ui.viewmodel.pekerja.UpdatePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.penyediamodel.PenyediaViewModel
-import com.example.uas_pam.ui.viewmodel.tanaman.UpdateTanamanEvent
-import com.example.uas_pam.ui.viewmodel.tanaman.UpdateTanamanState
-import com.example.uas_pam.ui.viewmodel.tanaman.UpdateTanamanViewModel
 import kotlinx.coroutines.launch
 
-object DestinasiUpdateTanaman: DestinasiNavigasi {
-    override val route = "update_tanaman"
-    override val titleRes = "Update Tanaman"
+object DestinasiUpdatePekerja: DestinasiNavigasi {
+    override val route = "update_pekerja"
+    override val titleRes = "Update Pekerja"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdateTanamanScreen(
+fun UpdatePekerjaScreen(
     navigateBack: () -> Unit,
-    id_tanaman: String,
+    id_pekerja: String,
     modifier: Modifier = Modifier,
-    viewModel: UpdateTanamanViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel: UpdatePekerjaViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
-    val tanamanState = viewModel.updateTanamanState
+    val pekerjaState = viewModel.updatePekerjaState
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    LaunchedEffect(id_tanaman) {
-        viewModel.getTanamanId(id_tanaman)
+    LaunchedEffect(id_pekerja) {
+        viewModel.getPekerjaId(id_pekerja)
     }
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBarr(
-                DestinasiUpdateTanaman.titleRes,
+                DestinasiUpdatePekerja.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
             )
         }
     ) { innerPadding ->
-        UpdateTanaman(
-            updateTanamanState = tanamanState,
-            onTanamanValueChange = viewModel::updateUpdateTanamanState,
+        UpdatePekerja(
+            updatePekerjaState = pekerjaState,
+            onPekerjaValueChange = viewModel::updateUpdatePekerjaState,
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.updateTanaman()
+                    viewModel.updatePekerja()
                     navigateBack()
                 }
             },
@@ -97,9 +86,9 @@ fun UpdateTanamanScreen(
 
 
 @Composable
-fun UpdateTanaman(
-    updateTanamanState: UpdateTanamanState,
-    onTanamanValueChange: (UpdateTanamanEvent) -> Unit,
+fun UpdatePekerja(
+    updatePekerjaState: UpdatePekerjaState,
+    onPekerjaValueChange: (UpdatePekerjaEvent) -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -107,9 +96,9 @@ fun UpdateTanaman(
         verticalArrangement = Arrangement.spacedBy(18.dp),
         modifier = modifier.padding(12.dp)
     ) {
-        FormInputTanaman(
-            updateTanamanEvent = updateTanamanState.updateTanamanEvent,
-            onValueChange = onTanamanValueChange,
+        FormInputPekerja(
+            updatePekerjaEvent = updatePekerjaState.updatePekerjaEvent,
+            onValueChange = onPekerjaValueChange,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
@@ -121,7 +110,7 @@ fun UpdateTanaman(
                 contentColor = Color.White
             )
         ) {
-            Text(text = "Update Tanaman")
+            Text(text = "Update Pekerja")
         }
     }
 }
@@ -129,20 +118,20 @@ fun UpdateTanaman(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormInputTanaman(
-    updateTanamanEvent: UpdateTanamanEvent,
+fun FormInputPekerja(
+    updatePekerjaEvent: UpdatePekerjaEvent,
     modifier: Modifier = Modifier,
-    onValueChange: (UpdateTanamanEvent) -> Unit = {},
-    enabled: Boolean = true
+    onValueChange: (UpdatePekerjaEvent) -> Unit = {},
+    enabled: Boolean = true,
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         OutlinedTextField(
-            value = updateTanamanEvent.namatanaman,
-            onValueChange = { onValueChange(updateTanamanEvent.copy(namatanaman = it)) },
-            label = { Text("Nama Tanaman") },
+            value = updatePekerjaEvent.namapekerja,
+            onValueChange = { onValueChange(updatePekerjaEvent.copy(namapekerja = it)) },
+            label = { Text("Nama Pekerja") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true,
@@ -151,9 +140,9 @@ fun FormInputTanaman(
             )
         )
         OutlinedTextField(
-            value = updateTanamanEvent.periodetanam,
-            onValueChange = { onValueChange(updateTanamanEvent.copy(periodetanam = it)) },
-            label = { Text("Periode Tanam") },
+            value = updatePekerjaEvent.jabatan,
+            onValueChange = { onValueChange(updatePekerjaEvent.copy(jabatan = it)) },
+            label = { Text("Jabatan") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -163,9 +152,9 @@ fun FormInputTanaman(
             )
         )
         OutlinedTextField(
-            value = updateTanamanEvent.deskripsitanaman,
-            onValueChange = { onValueChange(updateTanamanEvent.copy(deskripsitanaman = it)) },
-            label = { Text("Deskripsi Tanaman") },
+            value = updatePekerjaEvent.kontakpekerja,
+            onValueChange = { onValueChange(updatePekerjaEvent.copy(kontakpekerja = it)) },
+            label = { Text("Kontak Pekerja") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true,
