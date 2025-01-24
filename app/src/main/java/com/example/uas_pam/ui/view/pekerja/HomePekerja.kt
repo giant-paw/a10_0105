@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
@@ -26,6 +28,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -61,7 +64,7 @@ object DestinasiHomePekerja: DestinasiNavigasi {
 fun HomePekerjaScreen(
     navigateBack: () -> Unit,
     navigateToItemEntry: () -> Unit,
-    onDetailClick: (String) -> Unit = {},
+    navigateToUpdate: (Pekerja) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomePekerjaViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
@@ -105,7 +108,8 @@ fun HomePekerjaScreen(
             homePekerjaState = viewModel.pekerjaHomeState,
             retryAction = { viewModel.getPekerja() },
             modifier = Modifier.padding(innerPadding),
-            onDetailClick = onDetailClick
+            onDeleteClick = { pekerja -> viewModel.deletPekerja(pekerja.idpekerja) },
+            onUpdateClick = navigateToUpdate
         )
     }
 }
@@ -115,7 +119,8 @@ fun HomeStatusPekerja(
     homePekerjaState: HomePekerjaState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
-    onDetailClick: (String) -> Unit
+    onDeleteClick: (Pekerja) -> Unit,
+    onUpdateClick: (Pekerja) -> Unit
 ) {
     when (homePekerjaState) {
         is HomePekerjaState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
@@ -128,9 +133,8 @@ fun HomeStatusPekerja(
                 PekerjaLayout(
                     pekerja = homePekerjaState.pekerja,
                     modifier = modifier.fillMaxWidth(),
-                    onDetailClick = {
-                        onDetailClick(it.idpekerja)
-                    }
+                    onDeleteClick = onDeleteClick,
+                    onUpdateClick = onUpdateClick
                 )
             }
         }
@@ -172,7 +176,8 @@ fun OnError(retryAction:()->Unit, modifier: Modifier = Modifier){
 fun PekerjaLayout(
     pekerja: List<Pekerja>,
     modifier: Modifier = Modifier,
-    onDetailClick: (Pekerja) -> Unit
+    onDeleteClick: (Pekerja) -> Unit,
+    onUpdateClick: (Pekerja) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -183,8 +188,9 @@ fun PekerjaLayout(
             PekerjaCard(
                 pekerja = pkrj,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onDetailClick(pkrj) }
+                    .fillMaxWidth(),
+                onDeleteClick = onDeleteClick,
+                onUpdateClick = onUpdateClick
             )
         }
     }
@@ -193,7 +199,9 @@ fun PekerjaLayout(
 @Composable
 fun PekerjaCard(
     pekerja: Pekerja,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Pekerja) -> Unit,
+    onUpdateClick: (Pekerja) -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -241,6 +249,19 @@ fun PekerjaCard(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
+            }
+
+            // Tombol Edit & Hapus
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                IconButton(onClick = { onUpdateClick(pekerja) }) {
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
+                }
+                IconButton(onClick = { onDeleteClick(pekerja) }) {
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus")
+                }
             }
         }
     }

@@ -92,9 +92,9 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         // NAVIGASI HOME PEKERJA
         composable(DestinasiHomePekerja.route) {
             HomePekerjaScreen(
-                onDetailClick = { },
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = {  },
+                navigateToUpdate = { }
             )
         }
     }
