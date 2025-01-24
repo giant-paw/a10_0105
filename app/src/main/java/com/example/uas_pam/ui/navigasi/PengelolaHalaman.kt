@@ -10,8 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
+import com.example.uas_pam.ui.view.pekerja.DestinasiUpdatePekerja
 import com.example.uas_pam.ui.view.pekerja.EntryPekerjaScreen
 import com.example.uas_pam.ui.view.pekerja.HomePekerjaScreen
+import com.example.uas_pam.ui.view.pekerja.UpdatePekerjaScreen
 import com.example.uas_pam.ui.view.screen.MainMenuScreen
 import com.example.uas_pam.ui.view.screen.MainScreen
 import com.example.uas_pam.ui.view.tanaman.DestinasiDetailTanaman
@@ -96,7 +98,9 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             HomePekerjaScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = { navController.navigate(DestinasiInsertPekerja.route) },
-                navigateToUpdate = { }
+                navigateToUpdate = { pekerja ->
+                    navController.navigate("${DestinasiUpdatePekerja.route}/${pekerja.idpekerja}")
+                }
             )
         }
 
@@ -112,6 +116,18 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
+            )
+        }
+
+        // NAVIGASI UPDATE PEKERJA
+        composable(
+            route = "${DestinasiUpdatePekerja.route}/{id_pekerja}",
+            arguments = listOf(navArgument("id_pekerja") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_pekerja = backStackEntry.arguments?.getString("id_pekerja") ?: return@composable
+            UpdatePekerjaScreen(
+                id_pekerja = id_pekerja,
+                navigateBack = { navController.navigateUp() }
             )
         }
     }

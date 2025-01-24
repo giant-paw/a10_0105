@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.uas_pam.FarmApplication
 import com.example.uas_pam.ui.viewmodel.pekerja.HomePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.InsertPekerjaViewModel
+import com.example.uas_pam.ui.viewmodel.pekerja.UpdatePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.DetailTanamanViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.HomeTanamanViewModel
 import com.example.uas_pam.ui.viewmodel.tanaman.InsertTanamanViewModel
@@ -30,6 +31,8 @@ object PenyediaViewModel {
         initializer { HomePekerjaViewModel(farmapp().container.pekerjaRepository) }
         // Insert Pekerja
         initializer { InsertPekerjaViewModel(farmapp().container.pekerjaRepository) }
+        // Update Pekerja
+        initializer { UpdatePekerjaViewModel(farmapp().container.pekerjaRepository) }
     }
 }
 
