@@ -240,7 +240,7 @@ fun AktivitasCard(
                 Icon(imageVector = Icons.Filled.Info, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = aktivitas.deskripsi_aktivitas,
+                    text = aktivitas.deskripsiaktivitas,
                     fontSize = 18.sp
                 )
             }
