@@ -24,7 +24,8 @@ object PenyediaViewModel {
         initializer { InsertTanamanViewModel(farmapp().container.tanamanRepository) }
         // Detail Tanaman
         initializer { DetailTanamanViewModel(createSavedStateHandle(),
-            farmapp().container.tanamanRepository) }
+            farmapp().container.tanamanRepository)
+        }
         // Update Tanaman
         initializer { UpdateTanamanViewModel(farmapp().container.tanamanRepository) }
 
@@ -36,7 +37,9 @@ object PenyediaViewModel {
         initializer { UpdatePekerjaViewModel(farmapp().container.pekerjaRepository) }
         // Detail Pekerja
         initializer { DetailPekerjaViewModel(createSavedStateHandle(),
-            farmapp().container.pekerjaRepository) }
+            farmapp().container.pekerjaRepository)
+        }
+
     }
 }
 
