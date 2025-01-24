@@ -11,8 +11,6 @@ import com.example.uas_pam.model.Tanaman
 import com.example.uas_pam.repository.AktivitasRepository
 import com.example.uas_pam.repository.PekerjaRepository
 import com.example.uas_pam.repository.TanamanRepository
-import com.example.uas_pam.ui.viewmodel.pekerja.InsertPekerjaState
-import com.example.uas_pam.ui.viewmodel.pekerja.toInsertPekerjaEvent
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
