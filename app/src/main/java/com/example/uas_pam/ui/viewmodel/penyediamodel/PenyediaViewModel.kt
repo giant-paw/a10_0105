@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.uas_pam.FarmApplication
+import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.HomePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.InsertPekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.UpdatePekerjaViewModel
@@ -33,6 +34,9 @@ object PenyediaViewModel {
         initializer { InsertPekerjaViewModel(farmapp().container.pekerjaRepository) }
         // Update Pekerja
         initializer { UpdatePekerjaViewModel(farmapp().container.pekerjaRepository) }
+        // Detail Pekerja
+        initializer { DetailPekerjaViewModel(createSavedStateHandle(),
+            farmapp().container.pekerjaRepository) }
     }
 }
 

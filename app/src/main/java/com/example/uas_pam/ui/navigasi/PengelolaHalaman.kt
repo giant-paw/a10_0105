@@ -8,9 +8,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiUpdatePekerja
+import com.example.uas_pam.ui.view.pekerja.DetailPekerjaScreen
 import com.example.uas_pam.ui.view.pekerja.EntryPekerjaScreen
 import com.example.uas_pam.ui.view.pekerja.HomePekerjaScreen
 import com.example.uas_pam.ui.view.pekerja.UpdatePekerjaScreen
@@ -100,6 +102,9 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 navigateToItemEntry = { navController.navigate(DestinasiInsertPekerja.route) },
                 navigateToUpdate = { pekerja ->
                     navController.navigate("${DestinasiUpdatePekerja.route}/${pekerja.idpekerja}")
+                },
+                onDetailClick = {id_pekerja ->
+                    navController.navigate("${DestinasiDetailPekerja.route}/$id_pekerja")
                 }
             )
         }
@@ -128,6 +133,19 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             UpdatePekerjaScreen(
                 id_pekerja = id_pekerja,
                 navigateBack = { navController.navigateUp() }
+            )
+        }
+
+        // NAVIGASI DETAIL PEKERJA
+        composable(
+            route = "${DestinasiDetailPekerja.route}/{id_pekerja}",
+            arguments = listOf(navArgument("id_pekerja") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_pekerja = backStackEntry.arguments?.getString("id_pekerja") ?: return@composable
+            DetailPekerjaScreen(
+                id_pekerja = id_pekerja,
+                navigateBack = { navController.navigateUp() },
+                navController = navController
             )
         }
     }
