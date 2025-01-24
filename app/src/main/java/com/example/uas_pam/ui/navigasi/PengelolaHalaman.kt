@@ -32,7 +32,8 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         // NAVIGASI MAIN SCREEN / HALAMAN UTAMA
         composable(MainScreen.route) {
             MainMenuScreen(
-                onNavigateToTanaman = { navController.navigate(DestinasiHomeTanaman.route) }
+                onNavigateToTanaman = { navController.navigate(DestinasiHomeTanaman.route) },
+                onNavigateToPekerja = { navController.navigate(DestinasiHomePekerja.route) }
             )
         }
 

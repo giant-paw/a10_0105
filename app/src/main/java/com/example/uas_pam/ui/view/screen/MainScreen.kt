@@ -32,6 +32,7 @@ object MainScreen: DestinasiNavigasi {
 @Composable
 fun MainMenuScreen(
     onNavigateToTanaman: () -> Unit,
+    onNavigateToPekerja: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -65,10 +66,21 @@ fun MainMenuScreen(
                 onClick = { onNavigateToTanaman() },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.teal_200)
+                    containerColor = colorResource(R.color.purple_700)
                 )
             ) {
                 Text(text = "Tanaman",
+                    color = Color.White)
+            }
+
+            Button(
+                onClick = { onNavigateToPekerja() },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.purple_700)
+                )
+            ) {
+                Text(text = "Pekerja",
                     color = Color.White)
             }
         }
