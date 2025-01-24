@@ -66,7 +66,8 @@ fun HomePekerjaScreen(
     navigateToItemEntry: () -> Unit,
     navigateToUpdate: (Pekerja) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomePekerjaViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel: HomePekerjaViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    onDetailClick: (String) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -109,7 +110,8 @@ fun HomePekerjaScreen(
             retryAction = { viewModel.getPekerja() },
             modifier = Modifier.padding(innerPadding),
             onDeleteClick = { pekerja -> viewModel.deletPekerja(pekerja.idpekerja) },
-            onUpdateClick = navigateToUpdate
+            onUpdateClick = navigateToUpdate,
+            onDetailClick = onDetailClick,
         )
     }
 }
@@ -119,6 +121,7 @@ fun HomeStatusPekerja(
     homePekerjaState: HomePekerjaState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
     onDeleteClick: (Pekerja) -> Unit,
     onUpdateClick: (Pekerja) -> Unit
 ) {
@@ -134,7 +137,9 @@ fun HomeStatusPekerja(
                     pekerja = homePekerjaState.pekerja,
                     modifier = modifier.fillMaxWidth(),
                     onDeleteClick = onDeleteClick,
-                    onUpdateClick = onUpdateClick
+                    onUpdateClick = onUpdateClick,
+                    onDetailClick = onDetailClick,
+
                 )
             }
         }
@@ -176,6 +181,7 @@ fun OnError(retryAction:()->Unit, modifier: Modifier = Modifier){
 fun PekerjaLayout(
     pekerja: List<Pekerja>,
     modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
     onDeleteClick: (Pekerja) -> Unit,
     onUpdateClick: (Pekerja) -> Unit
 ) {
@@ -188,7 +194,8 @@ fun PekerjaLayout(
             PekerjaCard(
                 pekerja = pkrj,
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(pkrj.idpekerja) },
                 onDeleteClick = onDeleteClick,
                 onUpdateClick = onUpdateClick
             )
