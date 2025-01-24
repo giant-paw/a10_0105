@@ -1,4 +1,4 @@
-package com.example.uas_pam.ui.view.tanaman
+package com.example.uas_pam.ui.view.pekerja
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,37 +37,37 @@ import androidx.navigation.NavHostController
 import com.example.uas_pam.R
 import com.example.uas_pam.ui.customwidget.TopAppBarr
 import com.example.uas_pam.ui.navigasi.DestinasiNavigasi
+import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaState
+import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.penyediamodel.PenyediaViewModel
-import com.example.uas_pam.ui.viewmodel.tanaman.DetailTanamanState
-import com.example.uas_pam.ui.viewmodel.tanaman.DetailTanamanViewModel
 
 
-object DestinasiDetailTanaman : DestinasiNavigasi {
-    override val route = "detail_tanaman"
-    override val titleRes = "Detail Tanaman"
+object DestinasiDetailPekerja : DestinasiNavigasi {
+    override val route = "detail_pekerja"
+    override val titleRes = "Detail Pekerja"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailTanamanScreen(
+fun DetailPekerjaScreen(
     navigateBack: () -> Unit,
-    id_tanaman: String,
+    id_pekerja: String,
     modifier: Modifier = Modifier,
-    viewModel: DetailTanamanViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    viewModel: DetailPekerjaViewModel = viewModel(factory = PenyediaViewModel.Factory),
     navController: NavHostController
 ) {
-    val tanamanState by viewModel.detailTanamanState.collectAsState()
+    val pekerjaState by viewModel.detailPekerjaState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     LaunchedEffect(Unit) {
-        viewModel.getTanaman(id_tanaman)
+        viewModel.getPekerja(id_pekerja)
     }
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBarr(
-                title = DestinasiDetailTanaman.titleRes,
+                title = DestinasiDetailPekerja.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
@@ -76,19 +76,19 @@ fun DetailTanamanScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate("update_tanaman/$id_tanaman")
+                    navController.navigate("update_pekerja/$id_pekerja")
                 },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp),
                 containerColor = colorResource(R.color.primary),
                 contentColor = Color.White
             ) {
-                Icon(imageVector = Icons.Default.Edit, contentDescription = "Update Tanaman")
+                Icon(imageVector = Icons.Default.Edit, contentDescription = "Update pekerja")
             }
         }
     ) { innerPadding ->
-        DetailBodyTanaman(
-            detailTanamanState = tanamanState,
+        DetailBodyPekerja(
+            detailPekerjaState = pekerjaState,
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -98,30 +98,30 @@ fun DetailTanamanScreen(
 }
 
 @Composable
-fun DetailBodyTanaman(
-    detailTanamanState: DetailTanamanState,
+fun DetailBodyPekerja(
+    detailPekerjaState: DetailPekerjaState,
     modifier: Modifier = Modifier
 ) {
-    when (detailTanamanState) {
-        is DetailTanamanState.Loading -> {
+    when (detailPekerjaState) {
+        is DetailPekerjaState.Loading -> {
             CircularProgressIndicator(modifier = modifier.fillMaxSize())
         }
-        is DetailTanamanState.Error -> {
+        is DetailPekerjaState.Error -> {
             Text(
-                text = detailTanamanState.message,
+                text = detailPekerjaState.message,
                 color = Color.Red,
                 modifier = modifier.fillMaxSize().wrapContentSize(Alignment.Center)
             )
         }
-        is DetailTanamanState.Success -> {
-            val tanaman = detailTanamanState.tanaman
+        is DetailPekerjaState.Success -> {
+            val pekerja = detailPekerjaState.pekerja
             Column(
                 verticalArrangement = Arrangement.spacedBy(18.dp),
                 modifier = modifier.padding(12.dp)
             ) {
-                ComponentDetailTanaman(judul = "Nama Tanaman", isinya = tanaman.namatanaman)
-                ComponentDetailTanaman(judul = "Periode Tanam", isinya = tanaman.periodetanam)
-                ComponentDetailTanaman(judul = "Deskripsi Tanaman", isinya = tanaman.deskripsitanaman)
+                ComponentDetailPekerja(judul = "Nama Pekerja", isinya = pekerja.namapekerja)
+                ComponentDetailPekerja(judul = "Jabatan", isinya = pekerja.jabatan)
+                ComponentDetailPekerja(judul = "Kontak Pekerja", isinya = pekerja.kontakpekerja)
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
@@ -129,7 +129,7 @@ fun DetailBodyTanaman(
 }
 
 @Composable
-fun ComponentDetailTanaman(
+fun ComponentDetailPekerja(
     modifier: Modifier = Modifier,
     judul: String,
     isinya: String,
