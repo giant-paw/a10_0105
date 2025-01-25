@@ -4,7 +4,6 @@ import com.example.uas_pam.model.Aktivitas
 import com.example.uas_pam.service.AktivitasService
 import okio.IOException
 
-
 interface AktivitasRepository{
     suspend fun getAktivitas(): List<Aktivitas>
     suspend fun insertAktivitas(aktivitas: Aktivitas)
