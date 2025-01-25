@@ -25,7 +25,7 @@ import com.example.uas_pam.ui.navigasi.DestinasiNavigasi
 
 
 object MainScreen: DestinasiNavigasi {
-    override val route = "menu_dormitory"
+    override val route = "menu_farm"
     override val titleRes = ""
 }
 

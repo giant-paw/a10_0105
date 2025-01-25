@@ -11,9 +11,11 @@ import androidx.navigation.navArgument
 import com.example.uas_pam.ui.view.aktivitas.DestinasiDetailAktivitas
 import com.example.uas_pam.ui.view.aktivitas.DestinasiHomeAktivitas
 import com.example.uas_pam.ui.view.aktivitas.DestinasiInsertAktivitas
+import com.example.uas_pam.ui.view.aktivitas.DestinasiUpdateAktivitas
 import com.example.uas_pam.ui.view.aktivitas.DetailAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.EntryAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.HomeAktivitasScreen
+import com.example.uas_pam.ui.view.aktivitas.UpdateAktivitasScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
@@ -164,7 +166,9 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             HomeAktivitasScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = { navController.navigate(DestinasiInsertAktivitas.route) },
-                navigateToUpdate = { },
+                navigateToUpdate = { aktivitas ->
+                    navController.navigate("${DestinasiUpdateAktivitas.route}/${aktivitas.idaktivitas}")
+                },
                 onDetailClick = {id_aktivitas ->
                     navController.navigate("${DestinasiDetailAktivitas.route}/$id_aktivitas")
                 }
@@ -198,5 +202,18 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 navController = navController
             )
         }
+
+        // NAVIGASI UPDATE AKTIVITAS PERTANIAN
+        composable(
+            route = "${DestinasiUpdateAktivitas.route}/{id_aktivitas}",
+            arguments = listOf(navArgument("id_aktivitas") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_aktivitas = backStackEntry.arguments?.getString("id_aktivitas") ?: return@composable
+            UpdateAktivitasScreen(
+                id_aktivitas = id_aktivitas,
+                navigateBack = { navController.navigateUp() }
+            )
+        }
+
     }
 }

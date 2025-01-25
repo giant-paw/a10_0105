@@ -22,6 +22,7 @@ class DetailAktivitasViewModel(
     savedStateHandle: SavedStateHandle,
     private val akt: AktivitasRepository
 ) : ViewModel() {
+
     private val idaktivitas: String = checkNotNull(savedStateHandle["id_aktivitas"])
 
     private val _detailUiState = MutableStateFlow<DetailAktivitasState>(DetailAktivitasState.Loading)

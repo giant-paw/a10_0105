@@ -36,7 +36,6 @@ class FarmContainer: AppContainer{
     override val tanamanRepository : TanamanRepository by lazy { NetworkTanamanRepository(tanamanService) }
     // Pekerja
     override val pekerjaRepository: PekerjaRepository by lazy { NetworkPekerjaRepository(pekerjaService) }
-    
     // Aktivitas
     override val aktivitasRepository : AktivitasRepository by lazy { NetworkAktivitasRepository(aktivitasService) }
 

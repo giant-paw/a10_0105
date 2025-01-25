@@ -9,6 +9,7 @@ import com.example.uas_pam.FarmApplication
 import com.example.uas_pam.ui.viewmodel.aktivitas.DetailAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.aktivitas.HomeAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.aktivitas.InsertAktivitasViewModel
+import com.example.uas_pam.ui.viewmodel.aktivitas.UpdateAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.HomePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.InsertPekerjaViewModel
@@ -53,6 +54,9 @@ object PenyediaViewModel {
         initializer { DetailAktivitasViewModel(createSavedStateHandle(),
             farmapp().container.aktivitasRepository)
         }
+        // Update Aktivitas
+        initializer { UpdateAktivitasViewModel(
+            farmapp().container.aktivitasRepository, farmapp().container.tanamanRepository, farmapp().container.pekerjaRepository) }
     }
 }
 
