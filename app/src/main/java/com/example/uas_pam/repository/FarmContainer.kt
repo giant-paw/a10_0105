@@ -1,6 +1,7 @@
 package com.example.uas_pam.repository
 
 import com.example.uas_pam.service.AktivitasService
+import com.example.uas_pam.service.PanenService
 import com.example.uas_pam.service.PekerjaService
 import com.example.uas_pam.service.TanamanService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -12,6 +13,7 @@ interface AppContainer {
     val tanamanRepository : TanamanRepository
     val pekerjaRepository : PekerjaRepository
     val aktivitasRepository : AktivitasRepository
+    val panenRepository : PanenRepository
 }
 
 class FarmContainer: AppContainer{
@@ -31,6 +33,8 @@ class FarmContainer: AppContainer{
     private val pekerjaService: PekerjaService by lazy { retrofit.create(PekerjaService::class.java) }
     // Aktivitas
     private val aktivitasService: AktivitasService by lazy { retrofit.create(AktivitasService::class.java) }
+    // Catatan Panen
+    private val panenService: PanenService by lazy { retrofit.create(PanenService::class.java) }
 
     // Tanaman
     override val tanamanRepository : TanamanRepository by lazy { NetworkTanamanRepository(tanamanService) }
@@ -38,5 +42,7 @@ class FarmContainer: AppContainer{
     override val pekerjaRepository: PekerjaRepository by lazy { NetworkPekerjaRepository(pekerjaService) }
     // Aktivitas
     override val aktivitasRepository : AktivitasRepository by lazy { NetworkAktivitasRepository(aktivitasService) }
+    // Catatan Panen
+    override val panenRepository : PanenRepository by lazy { NetworkPanenRepository(panenService) }
 
 }
