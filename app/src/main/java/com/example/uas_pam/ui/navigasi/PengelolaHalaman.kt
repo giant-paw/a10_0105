@@ -8,8 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.uas_pam.ui.view.aktivitas.DestinasiDetailAktivitas
 import com.example.uas_pam.ui.view.aktivitas.DestinasiHomeAktivitas
 import com.example.uas_pam.ui.view.aktivitas.DestinasiInsertAktivitas
+import com.example.uas_pam.ui.view.aktivitas.DetailAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.EntryAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.HomeAktivitasScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
@@ -97,6 +99,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             UpdateTanamanScreen(
                 id_tanaman = id_tanaman,
                 navigateBack = { navController.navigateUp() }
+
             )
         }
 
@@ -156,14 +159,15 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         }
 
 
-
         // NAVIGASI HOME AKTIVITAS PERTANIAN
         composable(DestinasiHomeAktivitas.route) {
             HomeAktivitasScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = { navController.navigate(DestinasiInsertAktivitas.route) },
                 navigateToUpdate = { },
-                onDetailClick = { }
+                onDetailClick = {id_aktivitas ->
+                    navController.navigate("${DestinasiDetailAktivitas.route}/$id_aktivitas")
+                }
             )
         }
 
@@ -179,6 +183,19 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
+            )
+        }
+
+        // NAVIGASI DETAIL AKTIVITAS PERTANIAN
+        composable(
+            route = "${DestinasiDetailAktivitas.route}/{id_aktivitas}",
+            arguments = listOf(navArgument("id_aktivitas") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_aktivitas = backStackEntry.arguments?.getString("id_aktivitas") ?: return@composable
+            DetailAktivitasScreen(
+                id_aktivitas = id_aktivitas,
+                navigateBack = { navController.navigateUp() },
+                navController = navController
             )
         }
     }

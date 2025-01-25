@@ -1,4 +1,4 @@
-package com.example.uas_pam.ui.viewmodel
+package com.example.uas_pam.ui.viewmodel.aktivitas
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

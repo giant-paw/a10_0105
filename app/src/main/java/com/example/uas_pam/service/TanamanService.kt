@@ -24,7 +24,7 @@ interface TanamanService {
     @POST("inserttanaman.php")
     suspend fun insertTanaman(@Body tanaman: Tanaman)
 
-    @PUT("updatetanaman.php/")
+    @PUT("updatetanaman.php")
     suspend fun updateTanaman(@Query("id_tanaman") id_tanaman: String, @Body tanaman: Tanaman)
 
     @DELETE("deletetanaman.php")

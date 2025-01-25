@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.uas_pam.FarmApplication
+import com.example.uas_pam.ui.viewmodel.aktivitas.DetailAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.aktivitas.HomeAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.aktivitas.InsertAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaViewModel
@@ -48,6 +49,10 @@ object PenyediaViewModel {
         initializer { HomeAktivitasViewModel(farmapp().container.aktivitasRepository) }
         // Insert Aktivitas
         initializer { InsertAktivitasViewModel(farmapp().container.aktivitasRepository, farmapp().container.tanamanRepository, farmapp().container.pekerjaRepository) }
+        // Detail Aktivitas
+        initializer { DetailAktivitasViewModel(createSavedStateHandle(),
+            farmapp().container.aktivitasRepository)
+        }
     }
 }
 
