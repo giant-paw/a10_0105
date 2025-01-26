@@ -118,11 +118,11 @@ fun DetailBodyPanen(
                 verticalArrangement = Arrangement.spacedBy(18.dp),
                 modifier = modifier.padding(12.dp)
             ) {
-                ComponentDetailPanen(judul = "ID Tanaman", isinya = panen.idpanen)
+                ComponentDetailPanen(judul = "ID Panen", isinya = panen.idpanen)
                 ComponentDetailPanen(judul = "ID Tanaman", isinya = panen.idtanaman)
-                ComponentDetailPanen(judul = "ID Pekerja", isinya = panen.tanggalpanen)
-                ComponentDetailPanen(judul = "ID Pekerja", isinya = panen.jumlahpanen)
-                ComponentDetailPanen(judul = "ID Pekerja", isinya = panen.keterangan)
+                ComponentDetailPanen(judul = "Tanggal Panen", isinya = panen.tanggalpanen)
+                ComponentDetailPanen(judul = "Jumlah Panen", isinya = panen.jumlahpanen)
+                ComponentDetailPanen(judul = "Keterangan", isinya = panen.keterangan)
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }

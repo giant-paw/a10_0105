@@ -16,7 +16,9 @@ import com.example.uas_pam.ui.view.aktivitas.DetailAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.EntryAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.HomeAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.UpdateAktivitasScreen
+import com.example.uas_pam.ui.view.panen.DestinasiDetailPanen
 import com.example.uas_pam.ui.view.panen.DestinasiHomePanen
+import com.example.uas_pam.ui.view.panen.DetailPanenScreen
 import com.example.uas_pam.ui.view.panen.HomePanenScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
@@ -109,6 +111,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         }
 
 
+
         // NAVIGASI HOME PEKERJA
         composable(DestinasiHomePekerja.route) {
             HomePekerjaScreen(
@@ -162,6 +165,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 navController = navController
             )
         }
+
 
 
         // NAVIGASI HOME AKTIVITAS PERTANIAN
@@ -218,15 +222,30 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             )
         }
 
+
+
         // NAVIGASI HOME CATATAN PERTANIAN
         composable(DestinasiHomePanen.route) {
             HomePanenScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = {  },
                 navigateToUpdate = { },
-                onDetailClick = { }
+                onDetailClick = { id_panen ->
+                    navController.navigate("${DestinasiDetailPanen.route}/$id_panen") }
             )
         }
 
+        // NAVIGASI DETAIL CATATAN PERTANIAN
+        composable(
+            route = "${DestinasiDetailPanen.route}/{id_panen}",
+            arguments = listOf(navArgument("id_panen") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_panen = backStackEntry.arguments?.getString("id_panen") ?: return@composable
+            DetailPanenScreen(
+                id_panen = id_panen,
+                navigateBack = { navController.navigateUp() },
+                navController = navController
+            )
+        }
     }
 }
