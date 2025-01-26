@@ -19,9 +19,11 @@ import com.example.uas_pam.ui.view.aktivitas.UpdateAktivitasScreen
 import com.example.uas_pam.ui.view.panen.DestinasiDetailPanen
 import com.example.uas_pam.ui.view.panen.DestinasiHomePanen
 import com.example.uas_pam.ui.view.panen.DestinasiInsertPanen
+import com.example.uas_pam.ui.view.panen.DestinasiUpdatePanen
 import com.example.uas_pam.ui.view.panen.DetailPanenScreen
 import com.example.uas_pam.ui.view.panen.EntryPanenScreen
 import com.example.uas_pam.ui.view.panen.HomePanenScreen
+import com.example.uas_pam.ui.view.panen.UpdatePanenScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
@@ -49,6 +51,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         modifier = Modifier
     ) {
 
+        // HALAMAN UTAMA
         // NAVIGASI MAIN SCREEN / HALAMAN UTAMA
         composable(MainScreen.route) {
             MainMenuScreen(
@@ -60,6 +63,8 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         }
 
 
+
+        // TANAMAN
         // NAVIGASI HOME UNTUK TANAMAN
         composable(DestinasiHomeTanaman.route) {
             HomeTanamanScreen(
@@ -114,6 +119,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
 
 
 
+        // PEKERJA
         // NAVIGASI HOME PEKERJA
         composable(DestinasiHomePekerja.route) {
             HomePekerjaScreen(
@@ -170,6 +176,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
 
 
 
+        // AKTIVITAS PERTANIAN
         // NAVIGASI HOME AKTIVITAS PERTANIAN
         composable(DestinasiHomeAktivitas.route) {
             HomeAktivitasScreen(
@@ -226,12 +233,15 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
 
 
 
+        // CATATAN PERTANIAN
         // NAVIGASI HOME CATATAN PERTANIAN
         composable(DestinasiHomePanen.route) {
             HomePanenScreen(
                 navigateBack = { navController.navigateUp() },
                 navigateToItemEntry = { navController.navigate(DestinasiInsertPanen.route) },
-                navigateToUpdate = { },
+                navigateToUpdate = { panen ->
+                    navController.navigate("${DestinasiUpdatePanen.route}/${panen.idpanen}")
+                },
                 onDetailClick = { id_panen ->
                     navController.navigate("${DestinasiDetailPanen.route}/$id_panen") }
             )
@@ -262,6 +272,18 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
+            )
+        }
+
+        // NAVIGASI UPDATE CATATAN PANEN
+        composable(
+            route = "${DestinasiUpdatePanen.route}/{id_panen}",
+            arguments = listOf(navArgument("id_panen") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id_panen = backStackEntry.arguments?.getString("id_panen") ?: return@composable
+            UpdatePanenScreen(
+                id_panen = id_panen,
+                navigateBack = { navController.navigateUp() }
             )
         }
     }

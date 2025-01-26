@@ -13,6 +13,7 @@ import com.example.uas_pam.ui.viewmodel.aktivitas.UpdateAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.panen.DetailPanenViewModel
 import com.example.uas_pam.ui.viewmodel.panen.HomePanenViewModel
 import com.example.uas_pam.ui.viewmodel.panen.InsertPanenViewModel
+import com.example.uas_pam.ui.viewmodel.panen.UpdatePanenViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.HomePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.InsertPekerjaViewModel
@@ -44,7 +45,8 @@ object PenyediaViewModel {
         // Update Pekerja
         initializer { UpdatePekerjaViewModel(farmapp().container.pekerjaRepository) }
         // Detail Pekerja
-        initializer { DetailPekerjaViewModel(createSavedStateHandle(),
+        initializer {
+            DetailPekerjaViewModel(createSavedStateHandle(),
             farmapp().container.pekerjaRepository)
         }
 
@@ -53,27 +55,39 @@ object PenyediaViewModel {
         initializer { HomeAktivitasViewModel(farmapp().container.aktivitasRepository) }
         // Insert Aktivitas
         initializer { InsertAktivitasViewModel(
-            farmapp().container.aktivitasRepository, farmapp().container.tanamanRepository, farmapp().container.pekerjaRepository) }
+            farmapp().container.aktivitasRepository,
+            farmapp().container.tanamanRepository,
+            farmapp().container.pekerjaRepository)
+        }
         // Detail Aktivitas
         initializer { DetailAktivitasViewModel(createSavedStateHandle(),
             farmapp().container.aktivitasRepository)
         }
         // Update Aktivitas
         initializer { UpdateAktivitasViewModel(
-            farmapp().container.aktivitasRepository, farmapp().container.tanamanRepository, farmapp().container.pekerjaRepository) }
+            farmapp().container.aktivitasRepository,
+            farmapp().container.tanamanRepository,
+            farmapp().container.pekerjaRepository)
+        }
 
 
         // Home Catatan Panen
         initializer { HomePanenViewModel(farmapp().container.panenRepository) }
         // Detail Catatan Panen
-        initializer { DetailPanenViewModel(createSavedStateHandle(),
+        initializer {
+            DetailPanenViewModel(createSavedStateHandle(),
             farmapp().container.panenRepository)
         }
         // Insert Catatan Panen
         initializer { InsertPanenViewModel(
             farmapp().container.panenRepository,
-            farmapp().container.tanamanRepository) }
-
+            farmapp().container.tanamanRepository)
+        }
+        // Update Catatan Panrn
+        initializer { UpdatePanenViewModel(
+            farmapp().container.panenRepository,
+            farmapp().container.tanamanRepository)
+        }
     }
 }
 
