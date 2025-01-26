@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.uas_pam.model.Panen
 import com.example.uas_pam.model.Tanaman
 import com.example.uas_pam.repository.PanenRepository
-import com.example.uas_pam.repository.PekerjaRepository
 import com.example.uas_pam.repository.TanamanRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,13 +15,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+class UpdatePanenViewModel(
+    private val pn: PanenRepository,
+    private val tnmn: TanamanRepository,
+) : ViewModel() {
 
-class InsertPanenViewModel (
-    private val akt: PanenRepository,
-    private val tnmn: TanamanRepository
-
-): ViewModel(){
-    var insertPanenState by mutableStateOf(InsertPanenState())
+    var updatePanenState by mutableStateOf(UpdatePanenState())
         private set
 
     val tanamanList: StateFlow<List<Tanaman>> = flow {
@@ -33,8 +31,10 @@ class InsertPanenViewModel (
         initialValue = emptyList()
     )
 
+    // Tanaman
     var idTanamanOptions by mutableStateOf<List<String>>(emptyList())
         private set
+
     init {
         fetchTanamanList()
     }
@@ -44,44 +44,61 @@ class InsertPanenViewModel (
             try {
                 val tanamanData = tnmn.getTanaman()
                 idTanamanOptions = tanamanData
-                    .mapNotNull { it.idtanaman.toIntOrNull() }
-                    .sorted()
-                    .map { it.toString() }
+                    .map { it.idtanaman }
             } catch (e: Exception) {
                 idTanamanOptions = emptyList()
             }
         }
     }
 
-
-    fun updateInsertPanenState(insertPanenEvent: InsertPanenEvent){
-        insertPanenState = InsertPanenState(insertPanenEvent = insertPanenEvent)
+    fun updateUpdatePanenState(updatePanenEvent: UpdatePanenEvent) {
+        updatePanenState = updatePanenState.copy(updatePanenEvent = updatePanenEvent)
     }
 
-    suspend fun inserPanen(){
+    fun getPanenId(idpanen: String) {
         viewModelScope.launch {
             try {
-                akt.insertPanen(insertPanenState.insertPanenEvent.toPanen())
-            }catch (e:Exception){
+                val panen = pn.getPanenById(idpanen)
+                updatePanenState = UpdatePanenState(updatePanenEvent = panen.toUpdatPanenEvent())
+            } catch (e: Exception) {
                 e.printStackTrace()
+                updatePanenState = UpdatePanenState(isError = true, errorMessage = e.message)
+            }
+        }
+    }
+
+    fun updatePanen() {
+        viewModelScope.launch {
+            try {
+                val panen = updatePanenState.updatePanenEvent.toPn()
+                panen.idpanen?.let { id ->
+                    pn.updatePanen(id, panen)
+                    updatePanenState = updatePanenState.copy(isSuccess = true)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                updatePanenState = updatePanenState.copy(isError = true, errorMessage = e.message)
             }
         }
     }
 }
 
-data class InsertPanenState(
-    val insertPanenEvent : InsertPanenEvent = InsertPanenEvent()
+data class UpdatePanenState(
+    val updatePanenEvent: UpdatePanenEvent = UpdatePanenEvent(),
+    val isSuccess: Boolean = false,
+    val isError: Boolean = false,
+    val errorMessage: String? = null
 )
 
-data class InsertPanenEvent(
-    val idpanen: String ="",
+data class UpdatePanenEvent(
+    val idpanen: String = "",
     val idtanaman: String = "",
     val tanggalpanen: String = "",
     val jumlahpanen: String = "",
-    val keterangan: String = ""
+    val keterangan: String = "",
 )
 
-fun InsertPanenEvent.toPanen(): Panen = Panen(
+fun UpdatePanenEvent.toPn(): Panen = Panen(
     idpanen = idpanen,
     idtanaman = idtanaman,
     tanggalpanen = tanggalpanen,
@@ -89,11 +106,7 @@ fun InsertPanenEvent.toPanen(): Panen = Panen(
     keterangan = keterangan
 )
 
-fun Panen.toUiStatePanen(): InsertPanenState = InsertPanenState(
-    insertPanenEvent = toInsertPanenEvent()
-)
-
-fun Panen.toInsertPanenEvent():InsertPanenEvent = InsertPanenEvent(
+fun Panen.toUpdatPanenEvent(): UpdatePanenEvent = UpdatePanenEvent(
     idpanen = idpanen,
     idtanaman = idtanaman,
     tanggalpanen = tanggalpanen,

@@ -18,7 +18,9 @@ import com.example.uas_pam.ui.view.aktivitas.HomeAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.UpdateAktivitasScreen
 import com.example.uas_pam.ui.view.panen.DestinasiDetailPanen
 import com.example.uas_pam.ui.view.panen.DestinasiHomePanen
+import com.example.uas_pam.ui.view.panen.DestinasiInsertPanen
 import com.example.uas_pam.ui.view.panen.DetailPanenScreen
+import com.example.uas_pam.ui.view.panen.EntryPanenScreen
 import com.example.uas_pam.ui.view.panen.HomePanenScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
@@ -228,7 +230,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         composable(DestinasiHomePanen.route) {
             HomePanenScreen(
                 navigateBack = { navController.navigateUp() },
-                navigateToItemEntry = {  },
+                navigateToItemEntry = { navController.navigate(DestinasiInsertPanen.route) },
                 navigateToUpdate = { },
                 onDetailClick = { id_panen ->
                     navController.navigate("${DestinasiDetailPanen.route}/$id_panen") }
@@ -245,6 +247,21 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 id_panen = id_panen,
                 navigateBack = { navController.navigateUp() },
                 navController = navController
+            )
+        }
+
+        // NAVIGASI INSERT CATATAN PANEN
+        composable(
+            route = DestinasiInsertPanen.route,
+        ) {
+            EntryPanenScreen(
+                navigateBack = {
+                    navController.navigate(DestinasiHomePanen.route) {
+                        popUpTo(DestinasiHomePanen.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

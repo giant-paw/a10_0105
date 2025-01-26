@@ -12,6 +12,7 @@ import com.example.uas_pam.ui.viewmodel.aktivitas.InsertAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.aktivitas.UpdateAktivitasViewModel
 import com.example.uas_pam.ui.viewmodel.panen.DetailPanenViewModel
 import com.example.uas_pam.ui.viewmodel.panen.HomePanenViewModel
+import com.example.uas_pam.ui.viewmodel.panen.InsertPanenViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.DetailPekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.HomePekerjaViewModel
 import com.example.uas_pam.ui.viewmodel.pekerja.InsertPekerjaViewModel
@@ -68,6 +69,11 @@ object PenyediaViewModel {
         initializer { DetailPanenViewModel(createSavedStateHandle(),
             farmapp().container.panenRepository)
         }
+        // Insert Catatan Panen
+        initializer { InsertPanenViewModel(
+            farmapp().container.panenRepository,
+            farmapp().container.tanamanRepository) }
+
     }
 }
 
