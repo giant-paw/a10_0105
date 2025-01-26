@@ -1,4 +1,4 @@
-package com.example.uas_pam.ui.view.aktivitas
+package com.example.uas_pam.ui.view.panen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -33,29 +32,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uas_pam.R
 import com.example.uas_pam.ui.customwidget.TopAppBarr
 import com.example.uas_pam.ui.navigasi.DestinasiNavigasi
-import com.example.uas_pam.ui.viewmodel.aktivitas.InsertAktivitasEvent
-import com.example.uas_pam.ui.viewmodel.aktivitas.InsertAktivitasState
-import com.example.uas_pam.ui.viewmodel.aktivitas.InsertAktivitasViewModel
+import com.example.uas_pam.ui.viewmodel.panen.InsertPanenEvent
+import com.example.uas_pam.ui.viewmodel.panen.InsertPanenState
+import com.example.uas_pam.ui.viewmodel.panen.InsertPanenViewModel
 import com.example.uas_pam.ui.viewmodel.penyediamodel.PenyediaViewModel
 import kotlinx.coroutines.launch
+import kotlin.reflect.KFunction1
 
-object DestinasiInsertAktivitas: DestinasiNavigasi {
-    override val route = "item_aktivitas"
-    override val titleRes = "Form Isi Data Aktivitas"
+
+object DestinasiInsertPanen: DestinasiNavigasi {
+    override val route = "item_panen"
+    override val titleRes = "Form Isi Data Panen"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EntryAktivitasScreen(
+fun EntryPanenScreen(
     navigateBack:()->Unit,
     modifier: Modifier = Modifier,
-    viewModel: InsertAktivitasViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel: InsertPanenViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
 
     val coroutineScope = rememberCoroutineScope()
@@ -64,24 +64,23 @@ fun EntryAktivitasScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBarr(
-                title = DestinasiInsertAktivitas.titleRes,
+                title = DestinasiInsertPanen.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
             )
         }
     ) { innerpadding->
-        EntryBodyAktivitas(
-            insertAktivitasState = viewModel.insertAktivitasState,
-            onAktivitasValueChange = viewModel::updateInsertAktivitasState,
+        EntryBodyPanen(
+            insertPanenState = viewModel.insertPanenState,
+            onPanenValueChange = viewModel::updateInsertPanenState,
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.inserAktivitas()
+                    viewModel.inserPanen()
                     navigateBack()
                 }
             },
             idTanamanOptions = viewModel.idTanamanOptions,
-            idPekerjaOptions = viewModel.idPekerjaOptions,
             modifier = Modifier
                 .padding(innerpadding)
                 .verticalScroll(rememberScrollState())
@@ -91,12 +90,11 @@ fun EntryAktivitasScreen(
 }
 
 @Composable
-fun EntryBodyAktivitas(
-    insertAktivitasState: InsertAktivitasState,
-    onAktivitasValueChange: (InsertAktivitasEvent)->Unit,
+fun EntryBodyPanen(
+    insertPanenState: InsertPanenState,
+    onPanenValueChange: KFunction1<InsertPanenEvent, Unit>,
     onSaveClick:()->Unit,
     idTanamanOptions: List<String>,
-    idPekerjaOptions: List<String>,
 
     modifier: Modifier = Modifier
 ){
@@ -104,11 +102,10 @@ fun EntryBodyAktivitas(
         verticalArrangement = Arrangement.spacedBy(18.dp),
         modifier = modifier.padding(12.dp)
     ) {
-        FormInputAktivitas(
-            insertAktivitasEvent = insertAktivitasState.insertAktivitasEvent,
-            onValueChange = onAktivitasValueChange,
+        FormInputPanen(
+            insertPanenEvent = insertPanenState.insertPanenEvent,
+            onValueChange = onPanenValueChange,
             idTanamanOptions = idTanamanOptions,
-            idPekerjaOptions = idPekerjaOptions,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
@@ -128,16 +125,14 @@ fun EntryBodyAktivitas(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormInputAktivitas(
-    insertAktivitasEvent: InsertAktivitasEvent,
+fun FormInputPanen(
+    insertPanenEvent: InsertPanenEvent,
     modifier: Modifier = Modifier,
-    onValueChange:(InsertAktivitasEvent)->Unit = {},
+    onValueChange:(InsertPanenEvent)->Unit = {},
     enabled: Boolean = true,
-    idTanamanOptions: List<String> = emptyList(),
-    idPekerjaOptions: List<String> = emptyList()
+    idTanamanOptions: List<String> = emptyList()
 ){
     var tanamanDropdownExpanded by remember { mutableStateOf(false) }
-    var pekerjaDropdownExpanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier,
@@ -145,7 +140,7 @@ fun FormInputAktivitas(
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
-                value = insertAktivitasEvent.idtanaman,
+                value = insertPanenEvent.idtanaman,
                 onValueChange = {},
                 label = { Text("ID Tanaman") },
                 modifier = Modifier.fillMaxWidth().clickable { tanamanDropdownExpanded = true },
@@ -168,7 +163,7 @@ fun FormInputAktivitas(
                     DropdownMenuItem(
                         text = { Text(id) },
                         onClick = {
-                            onValueChange(insertAktivitasEvent.copy(idtanaman = id))
+                            onValueChange(insertPanenEvent.copy(idtanaman = id))
                             tanamanDropdownExpanded = false
                         }
                     )
@@ -176,43 +171,10 @@ fun FormInputAktivitas(
             }
         }
 
-        Box(modifier = Modifier.fillMaxWidth()) {
-            OutlinedTextField(
-                value = insertAktivitasEvent.idpekerja,
-                onValueChange = {},
-                label = { Text("ID Pekerja") },
-                modifier = Modifier.fillMaxWidth().clickable { pekerjaDropdownExpanded = true },
-                enabled = false,
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Dropdown Icon"
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = colorResource(R.color.primary)
-                )
-            )
-            DropdownMenu(
-                expanded = pekerjaDropdownExpanded,
-                onDismissRequest = { pekerjaDropdownExpanded = false }
-            ) {
-                idPekerjaOptions.forEach { id ->
-                    DropdownMenuItem(
-                        text = { Text(id) },
-                        onClick = {
-                            onValueChange(insertAktivitasEvent.copy(idpekerja = id))
-                            pekerjaDropdownExpanded = false
-                        }
-                    )
-                }
-            }
-        }
-
         OutlinedTextField(
-            value = insertAktivitasEvent.tanggalaktivitas,
-            onValueChange = {onValueChange(insertAktivitasEvent.copy(tanggalaktivitas = it))},
-            label = { Text("Tanggal Aktivitas") },
+            value = insertPanenEvent.tanggalpanen,
+            onValueChange = {onValueChange(insertPanenEvent.copy(tanggalpanen = it))},
+            label = { Text("Tanggal Panen") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true,
@@ -221,9 +183,21 @@ fun FormInputAktivitas(
             )
         )
         OutlinedTextField(
-            value = insertAktivitasEvent.deskripsiaktivitas,
-            onValueChange = {onValueChange(insertAktivitasEvent.copy(deskripsiaktivitas = it))},
-            label = { Text("Deskripsi Aktivitas") },
+            value = insertPanenEvent.jumlahpanen,
+            onValueChange = {onValueChange(insertPanenEvent.copy(jumlahpanen = it))},
+            label = { Text("Jumlah Panen") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = colorResource(R.color.primary)
+            )
+        )
+
+        OutlinedTextField(
+            value = insertPanenEvent.keterangan,
+            onValueChange = {onValueChange(insertPanenEvent.copy(keterangan = it))},
+            label = { Text("Keterangan") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true,
