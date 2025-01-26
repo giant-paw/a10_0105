@@ -1,7 +1,9 @@
 package com.example.uas_pam.model
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Panen(
     @SerialName("id_panen")
     val idpanen : String,

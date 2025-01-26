@@ -42,6 +42,7 @@ class HomePekerjaViewModel (private val pkrj: PekerjaRepository): ViewModel(){
         viewModelScope.launch {
             try {
                 pkrj.deletePekerja(id_pekerja)
+                getPekerja()
             }catch (e: IOException){
                 HomePekerjaState.Error
             }catch (e: HttpException){

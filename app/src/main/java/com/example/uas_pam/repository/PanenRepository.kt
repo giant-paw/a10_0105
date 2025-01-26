@@ -1,6 +1,7 @@
 package com.example.uas_pam.repository
 
 
+import com.example.uas_pam.model.Aktivitas
 import com.example.uas_pam.model.Panen
 import com.example.uas_pam.service.PanenService
 import okio.IOException
@@ -36,6 +37,7 @@ class NetworkPanenRepository(private val panenApiService: PanenService): PanenRe
     }
 
     override suspend fun getPanen(): List<Panen> = panenApiService.getPanen()
+
     override suspend fun getPanenById(idpanen: String): Panen {
         return panenApiService.getPanenById(idpanen)
     }

@@ -16,6 +16,8 @@ import com.example.uas_pam.ui.view.aktivitas.DetailAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.EntryAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.HomeAktivitasScreen
 import com.example.uas_pam.ui.view.aktivitas.UpdateAktivitasScreen
+import com.example.uas_pam.ui.view.panen.DestinasiHomePanen
+import com.example.uas_pam.ui.view.panen.HomePanenScreen
 import com.example.uas_pam.ui.view.pekerja.DestinasiDetailPekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiHomePekerja
 import com.example.uas_pam.ui.view.pekerja.DestinasiInsertPekerja
@@ -49,6 +51,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                 onNavigateToTanaman = { navController.navigate(DestinasiHomeTanaman.route) },
                 onNavigateToPekerja = { navController.navigate(DestinasiHomePekerja.route) },
                 onNavigateToAktivitas = { navController.navigate(DestinasiHomeAktivitas.route) },
+                onNavigateToPanen = { navController.navigate(DestinasiHomePanen.route) },
             )
         }
 
@@ -212,6 +215,16 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             UpdateAktivitasScreen(
                 id_aktivitas = id_aktivitas,
                 navigateBack = { navController.navigateUp() }
+            )
+        }
+
+        // NAVIGASI HOME CATATAN PERTANIAN
+        composable(DestinasiHomePanen.route) {
+            HomePanenScreen(
+                navigateBack = { navController.navigateUp() },
+                navigateToItemEntry = {  },
+                navigateToUpdate = { },
+                onDetailClick = { }
             )
         }
 

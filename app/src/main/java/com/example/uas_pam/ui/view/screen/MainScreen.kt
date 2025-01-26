@@ -34,6 +34,7 @@ fun MainMenuScreen(
     onNavigateToTanaman: () -> Unit,
     onNavigateToPekerja: () -> Unit,
     onNavigateToAktivitas: () -> Unit,
+    onNavigateToPanen: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -99,6 +100,19 @@ fun MainMenuScreen(
                 Text(text = "Aktivitas Pertanian",
                     color = Color.White)
             }
+
+            // Ke Catatan Panen
+            Button(
+                onClick = { onNavigateToPanen() },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.purple_700)
+                )
+            ) {
+                Text(text = "Catatan Panen",
+                    color = Color.White)
+            }
         }
+
     }
 }
