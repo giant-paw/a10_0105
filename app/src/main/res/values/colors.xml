@@ -7,5 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#6B4226</color>
+
+    <color name="primary">#3E2723</color>
+    <color name="secondary">#6D4C41</color>
+    <color name="cardBackground">#FFF3E0</color>
+    <color name="cardText">#3E2723</color>
+    <color name="iconColor">#D32F2F</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
 </resources>

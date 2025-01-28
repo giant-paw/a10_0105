@@ -1,30 +1,32 @@
 package com.example.uas_pam.ui.view.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.uas_pam.R
 import com.example.uas_pam.ui.navigasi.DestinasiNavigasi
 
-
-object MainScreen: DestinasiNavigasi {
+object MainScreen : DestinasiNavigasi {
     override val route = "menu_farm"
     override val titleRes = ""
 }
@@ -38,81 +40,104 @@ fun MainMenuScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = colorResource(R.color.primary))
-    ){
+        modifier = modifier.fillMaxSize()
+    ) {
+        // Menambahkan background
+        Image(
+            painter = painterResource(id = R.drawable.bgg),
+            contentDescription = "Background Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-        )
-        {
+        ) {
             Text(
                 text = "Giant Farm",
-                color = Color.White,
-                fontSize = 20.sp,
+                color = Color.Red,
+                fontSize = 40.sp,
                 modifier = Modifier.padding(20.dp)
             )
 
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "",
+            Row(
                 modifier = Modifier
-                    .size(300.dp)
-                    .padding(bottom = 24.dp)
-            )
-
-            // Ke Tanaman
-            Button(
-                onClick = { onNavigateToTanaman() },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.purple_700)
-                )
+                    .wrapContentWidth()
+                    .padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Tanaman",
-                    color = Color.White)
+                CardItem(
+                    title = "Tanaman",
+                    iconRes = R.drawable.logo1,
+                    onClick = onNavigateToTanaman
+                )
+                CardItem(
+                    title = "Pekerja",
+                    iconRes = R.drawable.employee,
+                    onClick = onNavigateToPekerja
+                )
             }
 
-            // Ke Pekerja
-            Button(
-                onClick = { onNavigateToPekerja() },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.purple_700)
-                )
+            Row(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(top = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Pekerja",
-                    color = Color.White)
-            }
-
-            // Ke Aktivitas Pertanian
-            Button(
-                onClick = { onNavigateToAktivitas() },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.purple_700)
+                CardItem(
+                    title = "Aktivitas Pertanian",
+                    iconRes = R.drawable.work,
+                    onClick = onNavigateToAktivitas
                 )
-            ) {
-                Text(text = "Aktivitas Pertanian",
-                    color = Color.White)
-            }
-
-            // Ke Catatan Panen
-            Button(
-                onClick = { onNavigateToPanen() },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.purple_700)
+                CardItem(
+                    title = "Catatan Panen",
+                    iconRes = R.drawable.writing,
+                    onClick = onNavigateToPanen
                 )
-            ) {
-                Text(text = "Catatan Panen",
-                    color = Color.White)
             }
         }
+    }
+}
 
+@Composable
+fun CardItem(
+    title: String,
+    iconRes: Int,
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier.size(150.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0x99000000)
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                painter = painterResource(id = iconRes),
+                contentDescription = title,
+                tint = Color.White,
+                modifier = Modifier.size(48.dp)
+            )
+            Spacer(modifier = Modifier.padding(top = 8.dp))
+            Text(
+                text = title,
+                color = Color.White,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

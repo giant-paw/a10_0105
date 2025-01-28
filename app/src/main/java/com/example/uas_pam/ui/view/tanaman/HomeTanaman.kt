@@ -209,7 +209,8 @@ fun TanamanCard(
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = colorResource(R.color.cardBackground))
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -219,34 +220,37 @@ fun TanamanCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Info, contentDescription = null)
+                Icon(imageVector = Icons.Filled.Info, contentDescription = null, tint = colorResource(R.color.iconColor)) // Red for info icon
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = tanaman.namatanaman,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(R.color.cardText) // Dark text color for title
                 )
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.DateRange, contentDescription = null)
+                Icon(imageVector = Icons.Filled.DateRange, contentDescription = null, tint = colorResource(R.color.iconColor)) // Red for date icon
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = tanaman.periodetanam,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colorResource(R.color.textSecondary) // Secondary text color
                 )
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.MailOutline, contentDescription = null)
+                Icon(imageVector = Icons.Filled.MailOutline, contentDescription = null, tint = colorResource(R.color.iconColor)) // Red for mail icon
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = tanaman.deskripsitanaman,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colorResource(R.color.textSecondary) // Secondary text color
                 )
             }
             Row(
@@ -254,9 +258,10 @@ fun TanamanCard(
                 horizontalArrangement = Arrangement.End
             ) {
                 IconButton(onClick = { onDeleteClick(tanaman) }) {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus")
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus", tint = colorResource(R.color.iconColor)) // Red for delete icon
                 }
             }
         }
     }
+
 }

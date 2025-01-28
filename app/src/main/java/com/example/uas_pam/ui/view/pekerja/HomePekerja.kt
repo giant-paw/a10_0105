@@ -109,7 +109,8 @@ fun HomePekerjaScreen(
             homePekerjaState = viewModel.pekerjaHomeState,
             retryAction = { viewModel.getPekerja() },
             modifier = Modifier.padding(innerPadding),
-            onDeleteClick = { pekerja -> viewModel.deletPekerja(pekerja.idpekerja) },
+            onDeleteClick = { pekerja ->
+                viewModel.deletePekerja(pekerja.idpekerja) },
             onUpdateClick = navigateToUpdate,
             onDetailClick = onDetailClick,
         )
@@ -213,7 +214,8 @@ fun PekerjaCard(
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = colorResource(R.color.cardBackground))
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -228,7 +230,8 @@ fun PekerjaCard(
                 Text(
                     text = pekerja.namapekerja,
                     fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(R.color.cardText)
                 )
             }
 
@@ -241,7 +244,8 @@ fun PekerjaCard(
                 Text(
                     text = pekerja.jabatan,
                     fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(R.color.textSecondary),
                 )
             }
 
@@ -264,10 +268,10 @@ fun PekerjaCard(
                 horizontalArrangement = Arrangement.End
             ) {
                 IconButton(onClick = { onUpdateClick(pekerja) }) {
-                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit", tint = colorResource(R.color.purple_500))
                 }
                 IconButton(onClick = { onDeleteClick(pekerja) }) {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus")
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus", tint = colorResource(R.color.iconColor))
                 }
             }
         }

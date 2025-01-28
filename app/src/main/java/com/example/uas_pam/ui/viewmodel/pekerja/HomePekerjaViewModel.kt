@@ -38,7 +38,7 @@ class HomePekerjaViewModel (private val pkrj: PekerjaRepository): ViewModel(){
         }
     }
 
-    fun deletPekerja(id_pekerja:String){
+    fun deletePekerja(id_pekerja:String){
         viewModelScope.launch {
             try {
                 pkrj.deletePekerja(id_pekerja)

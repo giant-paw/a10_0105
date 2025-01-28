@@ -216,7 +216,8 @@ fun PanenCard(
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = colorResource(R.color.cardBackground))
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -230,7 +231,8 @@ fun PanenCard(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = panen.idtanaman,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colorResource(R.color.cardText)
                 )
             }
 
@@ -242,7 +244,8 @@ fun PanenCard(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = panen.tanggalpanen,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colorResource(R.color.textSecondary)
                 )
             }
 
@@ -254,7 +257,8 @@ fun PanenCard(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = panen.jumlahpanen,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colorResource(R.color.textSecondary)
                 )
             }
 
@@ -263,10 +267,10 @@ fun PanenCard(
                 horizontalArrangement = Arrangement.End
             ) {
                 IconButton(onClick = { onUpdateClick(panen) }) {
-                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit", tint = colorResource(R.color.iconColor))
                 }
                 IconButton(onClick = { onDeleteClick(panen) }) {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus")
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus", tint = colorResource(R.color.iconColor))
                 }
             }
         }
