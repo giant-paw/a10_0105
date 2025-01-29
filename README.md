@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/f9c36f83-43d7-482b-9666-259eb42f60ce)![Screenshot 2025-01-29 075020](https://github.com/user-attachments/assets/b9b41efc-70bd-4652-84dd-a7df90c72521)
+![Screenshot 2025-01-29 075020](https://github.com/user-attachments/assets/e8ca8020-ba17-43fc-9fcc-5b3f18017d6f)
 
 Tanaman :
 
